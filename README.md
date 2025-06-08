@@ -134,7 +134,22 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **How do you pass a file name to a program using the `-i` and `-o` options?**
+
+**Antwort zu 1:**
+Dateinamen werden über die Kommandozeile als Argumente zu den Optionen `-i` (für Eingabedatei) und `-o` (für Ausgabedatei)
+übergeben. Der Dateiname folgt direkt auf die jeweilige Option, z. B.:
+
+`./getopt_params -i input.txt -o output.txt`
+
+Im Code werden diese Argumente mit `optarg` ausgelesen und in Variablen gespeichert.
+   
 2. **What are typical use cases for parameters versus flags? How do the differ from one another?**
+
+**Antwort zu 2:**
+Flags sind einfach Schalter, die ein bestimmtes Verhalten aktivieren oder deaktivieren, z. B. `-v` für ausführliche Ausgabe.
+Sie benötigen kein Argument. Parameter hingegen übergeben konkrete Werte oder Informationen an das Programm, z. B. Zahlen, Strings
+oder Dateinamen. Sie benötigen ein Argument. Während Flags binäre Zustände darstellen, liefern Parameter inhaltliche Eingaben für die
+Programmlogik.
 
 ---
 
@@ -187,6 +202,19 @@ In this exercise you will:
 #### Reflection Question
 
 * **Why is a run-to-completion (batch) approach often preferable to interactive input?**
+**Antwort:**
+
+  Ein Run-to-Completion (Batch)-Ansatz verarbeitet alle Eingaben automatisch und durchläuft das Programm vollständig
+  ohne Benutzerinteraktion. Das hat mehrere Vorteile:
+
+  - Automatisierbarkeit: Batch-Programme lassen sich leicht in Skripte oder automatisierte Abläufe einbinden, wodurch sich Prozesse
+    wiederholbar und ohne manuellen Aufwand ausführen lassen.
+  - Effizienz: Ohne Wartezeiten für Benutzereingaben läuft das Programm meist schneller und durchgängig ab.
+  - Reproduzierbarkeit: Ergebnisse sind konsistent, da Eingaben vordefiniert und festgelegt sind, was Tests und Debugging erleichtert.
+  - Skalierbarkeit: Batch-Programme können große Datenmengen oder viele Dateien hintereinander verarbeiten, ohne dass ein Nutzer ständig eingreifen muss.
+
+  Im Gegensatz dazu ist die interaktive Eingabe zwar benutzerfreundlich für kleine Tests oder Einzelanwendungen, aber für automatisierte oder groß
+  angelegte Abläufe oft unpraktisch und fehleranfällig.
 
 ---
 
@@ -218,6 +246,18 @@ In this exercise you will:
 #### Reflection Question
 
 * **What is the difference between redirecting to stdin and explicitly opening a file with `fopen`?**
+  **Antwort:**
+  Der Unterschied liegt vor allem in der Art, wie und wo die Datei geöffnet wird:
+
+  **Umleitung auf `stdin`**
+  - Erfolgt außerhalb des Programms durch die Shell (<datei.txt)
+  - Das Programm liest einfach wie gewohnt von `stdin` beokmmt aber die Dateiinhalte statt Tastatureingaben
+  - Vorteil: Kein Dateipfad oder `fopen` im Code nötig - das Programm bleibt einfach und flexibel
+
+  **Datei mit`fopen` öffnen:**
+  - Datei wird innerhalb des Programms explizit geöffnet.
+  - Der Pfad zur Datei muss bekannt und fest im Code oder als Argument angegeben sein.
+  - Vorteil: Mehr Kontrolle, z. B. beim Öffnen mehrerer Dateien oder beim gezielten Umgang mit Fehlern.
 
 ---
 
@@ -408,6 +448,49 @@ In this exercise you will:
 #### Reflection Question
 
 * **Explain in your own words what the encryption and decryption processes are doing in both ciphers.**
+
+  **Antwort:**
+  
+  **Caesar-Cipher (symmetrisch)**
+  Die Caesar-Verschlüsselung verschiebt jeden Buchstaben im Alphabet um eine feste Anzahl an Positionen.
+  Im vorliegenden Beispiel um 3 Positionen nach rechts, aus `D` wird bei einem Shift von 3 --> `G`.
+
+  - Verschlüsselung: Zeichenweise Addition eines festen Schlüssels (Shift) zum Buchstaben.
+  - Entschlüsselung: Subtraktion desselben Schlüssels (oder alternativ: Addition von `26 - shift`), um den Originalbuchstaben wiederherzustellen.
+
+  Nur Buchstaben werden verändert. Andere Zeichen wie z. B. Leerzeichen oder Satzzeichen bleiben unverändert.
+
+  **XOR-Verschlüsselung**
+  Die XOR-Verschlüsselung vergleicht jedes Zeichen bitweise mit einem Schlüssel. Dabei wird für jedes Bit entschieden:
+
+  - Wenn beide Bits gleich sind (0 und 0 oder 1 und 1) --> Ergebnis ist 0.
+  - Wenn beide Bits unteschiedliche sind ( 0 und 1 oder 1 und 0) --> Ergebnis ist 1.
+
+  Wenn derselbe XOR-Vergleich noch einmal auf die verschlüsselte Nachricht mit dem gleichen Schlüssel angewendet wird, erhält
+  man den ursprünglichen Text zurück.
+
+  Beispiel:
+
+  Buchstabe A --> hat den ASCII-Code 65, also binär: 01000001
+  Schlüssel K --> hat den ASCII-Code 75, also binär: 01001011
+
+  Vergleich:
+
+  01000001 (A) Buchstabe
+  01001011 (K) Schlüssel
+  =
+  00001010 (=verschlüsselter Buchstabe)
+
+  Rückwärtsvergleich:
+
+  00001010 (verschlüsselter Buchstabe)
+  01001011 (Schlüssel)
+  =
+  01000001 (Buchstabe A)
+  
+  
+
+
 
 ---
 
