@@ -1,0 +1,1 @@
+Dies ist ein Beispiel Text für Aufgabe 4 Input Redirection from STDIN
